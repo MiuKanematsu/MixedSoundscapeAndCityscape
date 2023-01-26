@@ -33,7 +33,7 @@ public:
     
 private:
     //TUIOのクライアントのインスタンス化
-    myTuioClient tuio;
+    ofxTuioReceiver tuio;
     //ログの出力用
     string log;
 };

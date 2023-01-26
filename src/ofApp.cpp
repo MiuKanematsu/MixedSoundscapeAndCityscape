@@ -3,9 +3,9 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     //TUIOに関連するイベントリスナーの追加
-        ofAddListener(tuio.objectAdded,this,&ofApp::objectAdded);
-        ofAddListener(tuio.objectRemoved,this,&ofApp::objectRemoved);
-        ofAddListener(tuio.objectUpdated,this,&ofApp::objectUpdated);
+        ofAddListener(tuio.AddTuioObject,this,&ofApp::objectAdded);
+        ofAddListener(tuio.RemoveTuioObject,this,&ofApp::objectRemoved);
+        ofAddListener(tuio.UpdateTuioObject,this,&ofApp::objectUpdated);
     
     //フレームレート設定
         ofSetFrameRate(60);
@@ -13,7 +13,7 @@ void ofApp::setup(){
         ofBackground(0,0,0);
          
         //ポート番号3333で、TUIOの通信開始
-        tuio.start(3333);
+        tuio.connect();
          
         //ログのテキストを空に
         log="";
@@ -21,19 +21,10 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    //TUIOのメッセージを受信
-    tuio.getMessage();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    //カーソルの状態を表示
-    tuio.drawCursors();
-    //オブジェクトの状態を表示
-    tuio.drawObjects();
-    //ログを表示
-    ofSetColor(0xffffff);
-    ofDrawBitmapString(log, 20, 20);
 }
 
 //--------------------------------------------------------------
@@ -93,21 +84,21 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 void ofApp::objectAdded(ofxTuioObject & tuioObject){
     //マーカー追加
-    log = " new object: " + ofToString(tuioObject.getFiducialId())+
+    log = " new object: " + ofToString(tuioObject.getSymbolID())+
     " X: "+ofToString(tuioObject.getX())+
     " Y: "+ofToString(tuioObject.getY())+
     " angle: "+ofToString(tuioObject.getAngleDegrees());
 }
 void ofApp::objectRemoved(ofxTuioObject & tuioObject){
     //マーカー削除
-    log = " object removed: " + ofToString(tuioObject.getFiducialId())+
+    log = " object removed: " + ofToString(tuioObject.getSymbolID())+
     " X: "+ofToString(tuioObject.getX())+
     " Y: "+ofToString(tuioObject.getY())+
     " angle: "+ofToString(tuioObject.getAngleDegrees());
 }
 void ofApp::objectUpdated(ofxTuioObject & tuioObject){
     //マーカーの状態更新
-    log = " object updated: " + ofToString(tuioObject.getFiducialId())+
+    log = " object updated: " + ofToString(tuioObject.getSymbolID())+
     " X: "+ofToString(tuioObject.getX())+
     " Y: "+ofToString(tuioObject.getY())+
     " angle: "+ofToString(tuioObject.getAngleDegrees());
