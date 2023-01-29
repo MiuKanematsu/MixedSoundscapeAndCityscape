@@ -19,10 +19,6 @@ void BaseController::update() {
 }
 
 void BaseController::drawLine() {
-    if (points.size() == 0) {
-        return;
-    }
-    
     ofPushStyle();
     ofSetColor(255);
     for (int i = 1; i < points.size(); i++) {
