@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxTuio.h"
 #include <BaseController.hpp>
+#include <RiverController.hpp>
 
 class ofApp : public ofBaseApp{
 
@@ -38,4 +39,5 @@ private:
     string log;
     
     BaseController *baseController = new BaseController(100);
+    RiverController *riverController = new RiverController(100);
 };

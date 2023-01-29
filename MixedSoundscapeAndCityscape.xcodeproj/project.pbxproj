@@ -38,6 +38,7 @@
 		879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D9BFFBBF4CC43DEE890B3C3E /* OscTypes.cpp */; };
 		8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81967292BFC87A0144BD32C6 /* ofxOscSender.cpp */; };
 		9D43AD8629865FFF0032A28B /* BaseController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D43AD8429865FFF0032A28B /* BaseController.cpp */; };
+		9D43AD89298688D70032A28B /* RiverController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9D43AD87298688D70032A28B /* RiverController.cpp */; };
 		ADE367465D2A8EBAD4C7A8D9 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD194746185E2DA11468377 /* IpEndpointName.cpp */; };
 		AE32A69C82A55019BCD08406 /* TcpSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8F80B6DD305C43C80377D /* TcpSender.cpp */; };
 		B266578FC55D23BFEBC042E7 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECF8674C7975F1063C5E30CA /* ofxGuiGroup.cpp */; };
@@ -132,6 +133,8 @@
 		9BF3AA0D4FAA89D0F8A0E545 /* OscReceivedElements.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = OscReceivedElements.cpp; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.cpp; sourceTree = SOURCE_ROOT; };
 		9D43AD8429865FFF0032A28B /* BaseController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BaseController.cpp; sourceTree = "<group>"; };
 		9D43AD8529865FFF0032A28B /* BaseController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BaseController.hpp; sourceTree = "<group>"; };
+		9D43AD87298688D70032A28B /* RiverController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RiverController.cpp; sourceTree = "<group>"; };
+		9D43AD88298688D70032A28B /* RiverController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RiverController.hpp; sourceTree = "<group>"; };
 		9F753C93A499A6E63CB91A13 /* TuioServer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = TuioServer.h; path = ../../../addons/ofxTuio/libs/ofxTuio/include/TuioServer.h; sourceTree = SOURCE_ROOT; };
 		9F7986DC4EB05E75FCE2C777 /* ofxOscSender.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxOscSender.h; path = ../../../addons/ofxOsc/src/ofxOscSender.h; sourceTree = SOURCE_ROOT; };
 		A2AAA8CA403479E6FCDF920E /* OscHostEndianness.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = OscHostEndianness.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscHostEndianness.h; sourceTree = SOURCE_ROOT; };
@@ -881,6 +884,8 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				9D43AD8429865FFF0032A28B /* BaseController.cpp */,
 				9D43AD8529865FFF0032A28B /* BaseController.hpp */,
+				9D43AD87298688D70032A28B /* RiverController.cpp */,
+				9D43AD88298688D70032A28B /* RiverController.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1024,6 +1029,7 @@
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
 				C4782ECC372420ACE0615B74 /* OscPrintReceivedElements.cpp in Sources */,
 				0546D1A38E13BD319CC9755B /* OscReceivedElements.cpp in Sources */,
+				9D43AD89298688D70032A28B /* RiverController.cpp in Sources */,
 				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,
 				72A929D3561B8232A182ABFC /* ofxOscBundle.cpp in Sources */,
 				5864AD82E20F15536D054EA3 /* ofxOscMessage.cpp in Sources */,
