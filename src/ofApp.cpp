@@ -3,28 +3,30 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     //TUIOに関連するイベントリスナーの追加
-        ofAddListener(tuio.AddTuioObject,this,&ofApp::objectAdded);
-        ofAddListener(tuio.RemoveTuioObject,this,&ofApp::objectRemoved);
-        ofAddListener(tuio.UpdateTuioObject,this,&ofApp::objectUpdated);
+    ofAddListener(tuio.AddTuioObject,this,&ofApp::objectAdded);
+    ofAddListener(tuio.RemoveTuioObject,this,&ofApp::objectRemoved);
+    ofAddListener(tuio.UpdateTuioObject,this,&ofApp::objectUpdated);
     
     //フレームレート設定
-        ofSetFrameRate(60);
-        //背景を黒に
-        ofBackground(0,0,0);
-         
-        //ポート番号3333で、TUIOの通信開始
-        tuio.connect();
-         
-        //ログのテキストを空に
-        log="";
+    ofSetFrameRate(60);
+    //背景を黒に
+    ofBackground(0,0,0);
+     
+    //ポート番号3333で、TUIOの通信開始
+    tuio.connect();
+     
+    //ログのテキストを空に
+    log="";
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    baseController->update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    baseController->drawLine();
 }
 
 //--------------------------------------------------------------

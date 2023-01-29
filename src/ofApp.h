@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxTuio.h"
+#include <BaseController.hpp>
 
 class ofApp : public ofBaseApp{
 
@@ -21,7 +22,6 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-		
     
     //TUIOの物体(マーカー)に関係するイベントを追加
     //物体の追加を検知
@@ -36,4 +36,6 @@ private:
     ofxTuioReceiver tuio;
     //ログの出力用
     string log;
+    
+    BaseController *baseController = new BaseController(100);
 };
