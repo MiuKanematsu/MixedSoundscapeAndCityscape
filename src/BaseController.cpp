@@ -38,11 +38,9 @@ void BaseController::drawPoints(){
 ofVec2f BaseController::getCenter(){
     ofVec2f p = ofVec2f(0, 0);
     for (int i = 0; i < points.size(); i++) {
-        p.x += points.at(i).x;
-        p.y += points.at(i).y;
+        p += points.at(i);
     }
-    p.x = p.x / points.size();
-    p.y = p.y / points.size();
+    p /= points.size();
     return p;
 }
 
