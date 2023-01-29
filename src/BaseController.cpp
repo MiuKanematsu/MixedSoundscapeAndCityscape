@@ -30,9 +30,12 @@ void BaseController::drawLine() {
 }
 
 void BaseController::drawPoints(){
+    ofPushStyle();
+    ofSetColor(255);
     for (int i = 0; i < points.size(); i++) {
         ofDrawEllipse(points.at(i), 10, 10);
     }
+    ofPopStyle();
 }
 
 ofVec2f BaseController::getCenter(){
