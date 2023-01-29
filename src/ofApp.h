@@ -4,6 +4,7 @@
 #include "ofxTuio.h"
 #include <BaseController.hpp>
 #include <RiverController.hpp>
+#include <BuildingController.hpp>
 
 class ofApp : public ofBaseApp{
 
@@ -40,4 +41,5 @@ private:
     
     BaseController *baseController = new BaseController(100);
     RiverController *riverController = new RiverController(100);
+    BuildingController *buildingController = new BuildingController(100);
 };

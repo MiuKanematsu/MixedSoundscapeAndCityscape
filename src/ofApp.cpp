@@ -35,12 +35,22 @@ void ofApp::setup(){
     riverController->deletePoint(0);
     riverController->deletePoints(2);
     riverController->addPoint(100, 100);
+    
+    buildingController->addPoint(100, 100);
+    buildingController->addPoint(200, 200);
+    buildingController->addPoint(200, 250); // 追加できない例
+    buildingController->addPoint(200, 400);
+    buildingController->addPoint(400, 400);
+    buildingController->deletePoint(0);
+    buildingController->deletePoints(2);
+    buildingController->addPoint(100, 100);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     baseController->update();
     riverController->update();
+    buildingController->update();
 }
 
 //--------------------------------------------------------------
@@ -53,11 +63,18 @@ void ofApp::draw(){
 //    ofPopStyle();
     
     
-    riverController->drawLine();
-    riverController->drawPoints();
+//    riverController->drawLine();
+//    riverController->drawPoints();
+//    ofPushStyle();
+//    ofSetColor(255, 0, 0);
+//    ofDrawEllipse(riverController->getCenter(), 10, 10);
+//    ofPopStyle();
+    
+    buildingController->drawLine();
+    buildingController->drawPoints();
     ofPushStyle();
     ofSetColor(255, 0, 0);
-    ofDrawEllipse(riverController->getCenter(), 10, 10);
+    ofDrawEllipse(buildingController->getCenter(), 10, 10);
     ofPopStyle();
 }
 
