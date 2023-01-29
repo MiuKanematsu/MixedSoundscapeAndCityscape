@@ -9,9 +9,6 @@
 
 BaseController::BaseController(float _minDistance) {
     this->minDistance = _minDistance;
-    points.push_back(ofVec2f(100, 100));
-    points.push_back(ofVec2f(200, 200));
-    points.push_back(ofVec2f(200, 300));
 }
 
 void BaseController::update() {
@@ -47,4 +44,16 @@ ofVec2f BaseController::getCenter(){
     p.x = p.x / points.size();
     p.y = p.y / points.size();
     return p;
+}
+
+void BaseController::addPoint(float x, float y) {
+  if (points.size() == 0) {
+      points.push_back(ofVec2f(x, y));
+  } else {
+    ofVec2f lastP = points.at(points.size() - 1);
+    float diff = ofDist(x, y, lastP.x, lastP.y);
+    if (diff > minDistance) {
+        points.push_back(ofVec2f(x, y));
+    }
+  }
 }

@@ -18,6 +18,7 @@ public:
     void update();
     void drawLine();
     void drawPoints();
+    void addPoint(float x, float y);
     ofVec2f getCenter();
 
 private:

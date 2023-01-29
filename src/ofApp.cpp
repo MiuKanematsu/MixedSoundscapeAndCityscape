@@ -17,6 +17,11 @@ void ofApp::setup(){
      
     //ログのテキストを空に
     log="";
+    
+    baseController->addPoint(100, 100);
+    baseController->addPoint(200, 200);
+    baseController->addPoint(200, 250); // 追加できない例
+    baseController->addPoint(200, 400);
 }
 
 //--------------------------------------------------------------
@@ -28,7 +33,11 @@ void ofApp::update(){
 void ofApp::draw(){
     baseController->drawLine();
     baseController->drawPoints();
+    
+    ofPushStyle();
+    ofSetColor(255, 0, 0);
     ofDrawEllipse(baseController->getCenter(), 10, 10);
+    ofPopStyle();
 }
 
 //--------------------------------------------------------------
