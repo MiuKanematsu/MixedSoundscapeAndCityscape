@@ -17,6 +17,7 @@ public:
     BaseController(float _minDistance);
     void update();
     void drawLine();
+    void drawPoints();
 
 private:
     float minDistance;

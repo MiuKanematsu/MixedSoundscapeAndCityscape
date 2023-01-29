@@ -32,3 +32,9 @@ void BaseController::drawLine() {
     }
     ofPopStyle();
 }
+
+void BaseController::drawPoints(){
+    for (int i=0; i<points.size(); i++) {
+        ofDrawEllipse(points.at(i), 10, 10);
+    }
+}

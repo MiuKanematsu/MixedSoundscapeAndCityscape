@@ -27,6 +27,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     baseController->drawLine();
+    baseController->drawPoints();
 }
 
 //--------------------------------------------------------------
