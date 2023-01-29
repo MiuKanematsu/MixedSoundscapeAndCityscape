@@ -18,6 +18,7 @@ public:
     void update();
     void drawLine();
     void drawPoints();
+    ofVec2f getCenter();
 
 private:
     float minDistance;

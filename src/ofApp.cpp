@@ -28,6 +28,7 @@ void ofApp::update(){
 void ofApp::draw(){
     baseController->drawLine();
     baseController->drawPoints();
+    ofDrawEllipse(baseController->getCenter(), 10, 10);
 }
 
 //--------------------------------------------------------------
