@@ -22,6 +22,9 @@ void ofApp::setup(){
     baseController->addPoint(200, 200);
     baseController->addPoint(200, 250); // 追加できない例
     baseController->addPoint(200, 400);
+    baseController->addPoint(400, 400);
+    
+    baseController->deletePoint(0);
 }
 
 //--------------------------------------------------------------

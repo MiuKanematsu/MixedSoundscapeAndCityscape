@@ -57,3 +57,7 @@ void BaseController::addPoint(float x, float y) {
         }
     }
 }
+
+void BaseController::deletePoint(int i) {
+    points.erase(points.begin() + i);
+}
