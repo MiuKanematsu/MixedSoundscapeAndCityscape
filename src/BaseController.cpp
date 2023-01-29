@@ -12,7 +12,7 @@ BaseController::BaseController(float _minDistance) {
 }
 
 void BaseController::update() {
-//    std::cout << "BaseController::update()" << std::endl;
+    //    std::cout << "BaseController::update()" << std::endl;
 }
 
 void BaseController::drawLine() {
@@ -47,13 +47,15 @@ ofVec2f BaseController::getCenter(){
 }
 
 void BaseController::addPoint(float x, float y) {
-  if (points.size() == 0) {
-      points.push_back(ofVec2f(x, y));
-  } else {
-    ofVec2f lastP = points.at(points.size() - 1);
-    float diff = ofDist(x, y, lastP.x, lastP.y);
-    if (diff > minDistance) {
-        points.push_back(ofVec2f(x, y));
+    ofVec2f targetPoint = ofVec2f(x, y);
+    
+    if (points.size() == 0) {
+        points.push_back(targetPoint);
+    } else {
+        ofVec2f lastPonint = points.at(points.size() - 1);
+        float distance = lastPonint.distance(targetPoint);
+        if (distance > minDistance) {
+            points.push_back(targetPoint);
+        }
     }
-  }
 }
