@@ -25,6 +25,10 @@ void ofApp::setup(){
     baseController->addPoint(400, 400);
     
     baseController->deletePoint(0);
+    
+    baseController->deletePoints(2);
+    
+    baseController->addPoint(100, 100);
 }
 
 //--------------------------------------------------------------

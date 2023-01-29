@@ -20,7 +20,9 @@ public:
     void drawPoints();
     void addPoint(float x, float y);
     ofVec2f getCenter();
-    void deletePoint(int num);
+    void deletePoint(int i);
+    void deletePoints(int length);
+    
 private:
     float minDistance;
     vector<ofVec2f> points;
