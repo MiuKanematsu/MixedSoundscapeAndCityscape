@@ -6,6 +6,12 @@
 #include <RiverController.hpp>
 #include <BuildingController.hpp>
 
+enum ScapeType {
+    RIVER = 1,
+    BUILDING = 2,
+    MOUNTAIN = 3,
+};
+
 class ofApp : public ofBaseApp{
 
 public:
@@ -38,8 +44,8 @@ private:
     ofxTuioReceiver tuio;
     //ログの出力用
     string log;
+    ScapeType currentScapeType = ScapeType::RIVER;
     
-    BaseController *baseController = new BaseController(100);
     RiverController *riverController = new RiverController(100);
     BuildingController *buildingController = new BuildingController(100);
 };

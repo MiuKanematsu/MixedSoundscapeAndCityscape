@@ -17,58 +17,22 @@ void ofApp::setup(){
      
     //ログのテキストを空に
     log="";
-    
-    baseController->addPoint(100, 100);
-    baseController->addPoint(200, 200);
-    baseController->addPoint(200, 250); // 追加できない例
-    baseController->addPoint(200, 400);
-    baseController->addPoint(400, 400);
-    baseController->deletePoint(0);
-    baseController->deletePoints(2);
-    baseController->addPoint(100, 100);
-    
-    riverController->addPoint(100, 100);
-    riverController->addPoint(200, 200);
-    riverController->addPoint(200, 250); // 追加できない例
-    riverController->addPoint(200, 400);
-    riverController->addPoint(400, 400);
-    riverController->deletePoint(0);
-    riverController->deletePoints(2);
-    riverController->addPoint(100, 100);
-    
-    buildingController->addPoint(100, 100);
-    buildingController->addPoint(200, 200);
-    buildingController->addPoint(200, 250); // 追加できない例
-    buildingController->addPoint(200, 400);
-    buildingController->addPoint(400, 400);
-    buildingController->deletePoint(0);
-    buildingController->deletePoints(2);
-    buildingController->addPoint(100, 100);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    baseController->update();
     riverController->update();
     buildingController->update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-//    baseController->drawLine();
-//    baseController->drawPoints();
-//    ofPushStyle();
-//    ofSetColor(255, 0, 0);
-//    ofDrawEllipse(baseController->getCenter(), 10, 10);
-//    ofPopStyle();
-    
-    
-//    riverController->drawLine();
-//    riverController->drawPoints();
-//    ofPushStyle();
-//    ofSetColor(255, 0, 0);
-//    ofDrawEllipse(riverController->getCenter(), 10, 10);
-//    ofPopStyle();
+    riverController->drawLine();
+    riverController->drawPoints();
+    ofPushStyle();
+    ofSetColor(255, 0, 0);
+    ofDrawEllipse(riverController->getCenter(), 10, 10);
+    ofPopStyle();
     
     buildingController->drawLine();
     buildingController->drawPoints();
@@ -80,7 +44,11 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if (key == 'r') {
+        currentScapeType = ScapeType::RIVER;
+    } else if (key == 'b') {
+        currentScapeType = ScapeType::BUILDING;
+    }
 }
 
 //--------------------------------------------------------------
@@ -95,7 +63,11 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    if (currentScapeType == ScapeType::RIVER) {
+        riverController->addPoint(x, y);
+    } else if (currentScapeType == ScapeType::BUILDING) {
+        buildingController->addPoint(x, y);
+    }
 }
 
 //--------------------------------------------------------------
