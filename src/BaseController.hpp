@@ -25,7 +25,10 @@ public:
     
 private:
     float minDistance;
+
+protected:
     vector<ofVec2f> points;
+    ofColor c;
 };
 
 #endif /* BaseController_hpp */

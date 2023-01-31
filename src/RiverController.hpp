@@ -15,6 +15,8 @@
 class RiverController: public BaseController {
 public:
     RiverController(float _minDistance);
+    void addRivers(int num);
+    void drawPoints();
 private:
     vector<RiverParticle> riverParticles;
 };
