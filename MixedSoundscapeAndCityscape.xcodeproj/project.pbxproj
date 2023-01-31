@@ -11,6 +11,7 @@
 		0791EC17E0A3E9787B123A4E /* TuioServer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88F08D3581AF0DA451D1B568 /* TuioServer.cpp */; };
 		0DFB774A706EEAA31C294080 /* OscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E23A22F89AA91C8DDE26C2C1 /* OscReceiver.cpp */; };
 		171704CD536BE38B77A9E4DE /* TuioObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8F1389116BB12CD8CB5659E1 /* TuioObject.cpp */; };
+		1772A26429892B9D005D88D9 /* RiverParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1772A26229892B9D005D88D9 /* RiverParticle.cpp */; };
 		17946CDC29868CBC00259C0B /* BuildingController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17946CDA29868CBC00259C0B /* BuildingController.cpp */; };
 		1A35AA62FEA7C76A197889D0 /* ofxTuioSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A31F5E22300C8AC24BF9FC4 /* ofxTuioSender.cpp */; };
 		1CD33E884D9E3358252E82A1 /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 907C5B5E104864A2D3A25745 /* ofxToggle.cpp */; };
@@ -82,6 +83,8 @@
 		1143356123BAE33AEAC0C4E8 /* WebSockSender.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = WebSockSender.h; path = ../../../addons/ofxTuio/libs/ofxTuio/include/WebSockSender.h; sourceTree = SOURCE_ROOT; };
 		14B309278A1D28F3AB6D048C /* OneEuroFilter.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = OneEuroFilter.cpp; path = ../../../addons/ofxTuio/libs/ofxTuio/src/OneEuroFilter.cpp; sourceTree = SOURCE_ROOT; };
 		15F2C6477A769C03A56D1401 /* ofxSlider.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofxSlider.cpp; path = ../../../addons/ofxGui/src/ofxSlider.cpp; sourceTree = SOURCE_ROOT; };
+		1772A26229892B9D005D88D9 /* RiverParticle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RiverParticle.cpp; sourceTree = "<group>"; };
+		1772A26329892B9D005D88D9 /* RiverParticle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RiverParticle.hpp; sourceTree = "<group>"; };
 		17946CDA29868CBC00259C0B /* BuildingController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BuildingController.cpp; sourceTree = "<group>"; };
 		17946CDB29868CBC00259C0B /* BuildingController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BuildingController.hpp; sourceTree = "<group>"; };
 		17BDC079E4FCEBFD28DEBEE1 /* TuioManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = TuioManager.cpp; path = ../../../addons/ofxTuio/libs/ofxTuio/src/TuioManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -891,6 +894,8 @@
 				9D43AD88298688D70032A28B /* RiverController.hpp */,
 				17946CDA29868CBC00259C0B /* BuildingController.cpp */,
 				17946CDB29868CBC00259C0B /* BuildingController.hpp */,
+				1772A26229892B9D005D88D9 /* RiverParticle.cpp */,
+				1772A26329892B9D005D88D9 /* RiverParticle.hpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1046,6 +1051,7 @@
 				1F7BD24FAD3292F439906930 /* OneEuroFilter.cpp in Sources */,
 				0DFB774A706EEAA31C294080 /* OscReceiver.cpp in Sources */,
 				6E50E5D16ED0DD1F5618432E /* TcpReceiver.cpp in Sources */,
+				1772A26429892B9D005D88D9 /* RiverParticle.cpp in Sources */,
 				AE32A69C82A55019BCD08406 /* TcpSender.cpp in Sources */,
 				3AA57413484C9176F17BD4FB /* TuioBlob.cpp in Sources */,
 				493A764710DF62C2A07616AD /* TuioClient.cpp in Sources */,
