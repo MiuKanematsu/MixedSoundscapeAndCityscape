@@ -20,6 +20,10 @@ private:
 public:
     RiverParticle(ofVec2f p);
     void init();
+    void update();
+    void applyForce(ofVec2f force);
+    void seek(vector<ofVec2f> targets);
+    void display();
 };
 
 #endif /* RiverParticle_hpp */

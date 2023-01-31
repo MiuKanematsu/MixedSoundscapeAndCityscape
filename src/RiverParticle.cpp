@@ -29,3 +29,39 @@ void RiverParticle::init() {
                          ofMap(ofRandom(0, 20), 0, 100, 0, 255),
                          255);
 }
+
+void RiverParticle::update() {
+    velocity += acceleration;
+    velocity.limit(maxspeed);
+    position += velocity;
+    acceleration *= 0;
+}
+
+void RiverParticle::applyForce(ofVec2f force) {
+    acceleration += force;
+}
+
+void RiverParticle::seek(vector<ofVec2f> targets) {
+    ofVec2f target = targets.at(targetNum) + targetPlay;
+    if (ofDist(target.x, target.y, position.x, position.y) < targetMinDist) {
+        targetNum++;
+        if (targets.size() == targetNum) {
+            position = targets.at(0);
+            init();
+        }
+    }
+    ofVec2f desired = target - position;
+    desired.normalize();
+    desired *= maxspeed;
+    ofVec2f steer = desired - velocity;
+    steer.limit(maxforce);
+    this->applyForce(steer);
+}
+
+void RiverParticle::display() {
+    ofPushStyle();
+    ofNoFill();
+    ofSetColor(c);
+    ofDrawEllipse(position.x, position.y, r, r);
+    ofPopStyle();
+}
