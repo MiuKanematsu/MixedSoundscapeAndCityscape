@@ -156,6 +156,7 @@ void ofApp::objectAdded(ofxTuioObject & tuioObject){
     " Y: " + ofToString(tuioObject.getY())+
     " angle: " + ofToString(tuioObject.getAngleDegrees());
     
+    // TODO: ここにIDとの対応関係を追加
     if (tuioObject.getSymbolID() == 3) {
         riverController->addPoint(riverController->getLineCount(),
                                   tuioObject.getScreenX(ofGetWindowWidth()),
@@ -180,6 +181,7 @@ void ofApp::objectUpdated(ofxTuioObject & tuioObject){
     " Y: " + ofToString(tuioObject.getY())+
     " angle: " + ofToString(tuioObject.getAngleDegrees());
     
+    // TODO: ここにIDとの対応関係を追加
     if (tuioObject.getSymbolID() == 3) {
         riverController->addPoint(riverController->getLineCount() - 1,
                                   tuioObject.getScreenX(ofGetWindowWidth()),
