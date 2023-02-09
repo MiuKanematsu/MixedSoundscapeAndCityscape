@@ -15,10 +15,13 @@
 class RiverController: public BaseController {
 public:
     RiverController(float _minDistance);
-    void addRivers(int num);
+    void addRivers(int riverIndex, int num);
     void drawPoints();
+    void addPoint(int riverIndex, float x, float y);
+    void update();
+    void drawRiver();
 private:
-    vector<RiverParticle> riverParticles;
+    vector<vector<RiverParticle>> riverParticles;
 };
 
 #endif /* RiverController_hpp */

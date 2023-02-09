@@ -30,7 +30,12 @@ void BuildingController::drawBuildings() {
     ofPopStyle();
 }
 
-void BuildingController::addPoint(float _x, float _y) {
+void BuildingController::addPoint(int i, float _x, float _y) {
+    if (lines.size() == i) {
+        lines.push_back(vector<ofVec2f>());
+    }
+    
+    vector<ofVec2f> &points = lines.at(i);
     if (points.size() == 0) {
         points.push_back(ofVec2f(_x, _y));
     } else {
@@ -43,7 +48,7 @@ void BuildingController::addPoint(float _x, float _y) {
         }
         if (!isContact) {
             points.push_back(ofVec2f(_x, _y));
-            buildings.push_back(Building(ofVec2f(_x, _y), ofRandom(10, 50), ofRandom(10, 50)));
+            buildings.push_back(Building(ofVec2f(_x, _y), ofRandom(20, 100), ofRandom(20, 100)));
         }
     }
 }

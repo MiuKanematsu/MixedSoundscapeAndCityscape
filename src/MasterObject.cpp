@@ -26,7 +26,7 @@ void MasterObject::draw() {
     ofFill();
     ofSetColor(255, 255, 0, 50);
     ofDrawEllipse(x, y, wh, wh);
-    ofDrawBitmapString(to_string(x), x, y);
+//    ofDrawBitmapString(to_string(x), x, y);
     ofPopStyle();
 }
 

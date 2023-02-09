@@ -18,10 +18,13 @@ void BaseController::update() {
 void BaseController::drawLine() {
     ofPushStyle();
     ofSetColor(255);
-    for (int i = 1; i < points.size(); i++) {
-        ofVec2f p1 = points.at(i - 1);
-        ofVec2f p2 = points.at(i);
-        ofDrawLine(p1, p2);
+    for (int i = 0; i < lines.size(); i++) {
+        vector<ofVec2f> points = lines.at(i);
+        for (int j = 1; j < points.size(); j++) {
+            ofVec2f p1 = points.at(j - 1);
+            ofVec2f p2 = points.at(j);
+            ofDrawLine(p1, p2);
+        }
     }
     ofPopStyle();
 }
@@ -29,42 +32,46 @@ void BaseController::drawLine() {
 void BaseController::drawPoints(){
     ofPushStyle();
     ofSetColor(255);
-    for (int i = 0; i < points.size(); i++) {
-        ofDrawEllipse(points.at(i), 10, 10);
+    for (int i = 0; i < lines.size(); i++) {
+        vector<ofVec2f> points = lines.at(i);
+        for (int j = 0; j < points.size(); j++) {
+            ofDrawEllipse(points.at(j), 10, 10);
+        }
     }
     ofPopStyle();
 }
 
-ofVec2f BaseController::getCenter(){
-    ofVec2f p = ofVec2f(0, 0);
-    for (int i = 0; i < points.size(); i++) {
-        p += points.at(i);
+vector<ofVec2f> BaseController::getCenters(){
+    vector<ofVec2f> centers;
+    for (int i = 0; i < lines.size(); i++) {
+        ofVec2f center = ofVec2f(0, 0);
+        vector<ofVec2f> points = lines.at(i);
+        for (int j = 0; j < points.size(); j++) {
+            center += points.at(j);
+        }
+        center /= points.size();
+        centers.push_back(center);
     }
-    p /= points.size();
-    return p;
+    return centers;
 }
 
-void BaseController::addPoint(float x, float y) {
+void BaseController::addPoint(int i, float x, float y) {
     ofVec2f targetPoint = ofVec2f(x, y);
     
+    if (i >= lines.size()) {
+        lines.push_back(vector<ofVec2f>());
+    }
+    
+    vector<ofVec2f> &points = lines.at(i);
     if (points.size() == 0) {
         points.push_back(targetPoint);
-    } else {
-        ofVec2f lastPonint = points.at(points.size() - 1);
-        float distance = lastPonint.distance(targetPoint);
-        if (distance > minDistance) {
-            points.push_back(targetPoint);
-        }
+        return;
     }
-}
-
-void BaseController::deletePoint(int i) {
-    points.erase(points.begin() + i);
-}
-
-void BaseController::deletePoints(int length) {
-    for (int i = 0; i < length; i++) {
-        this->deletePoint(0);
+    
+    ofVec2f lastPonint = points.at(points.size() - 1);
+    float distance = lastPonint.distance(targetPoint);
+    if (distance > minDistance) {
+        points.push_back(targetPoint);
     }
 }
 

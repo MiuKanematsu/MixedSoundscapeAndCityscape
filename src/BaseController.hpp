@@ -18,13 +18,12 @@ public:
     void update();
     void drawLine();
     void drawPoints();
-    void addPoint(float x, float y);
-    ofVec2f getCenter();
-    void deletePoint(int i);
-    void deletePoints(int length);
+    void addPoint(int i, float x, float y);
+    vector<ofVec2f> getCenters();
     bool intersect(ofVec2f _p1, ofVec2f _p2, float _w, float _h);
+    int getLineCount() { return lines.size(); };
 protected:
-    vector<ofVec2f> points;
+    vector<vector<ofVec2f>> lines;
     ofColor c;
     float minDistance;
 };

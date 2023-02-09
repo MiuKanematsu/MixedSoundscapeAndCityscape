@@ -2,6 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofSetFullscreen(true);
     //TUIOに関連するイベントリスナーの追加
     ofAddListener(tuio.AddTuioObject,this,&ofApp::objectAdded);
     ofAddListener(tuio.RemoveTuioObject,this,&ofApp::objectRemoved);
@@ -36,18 +37,35 @@ void ofApp::draw(){
         
         ofPushStyle();
         ofSetColor(255, 0, 0);
-        ofDrawEllipse(riverController->getCenter(), 10, 10);
+        for (auto center : riverController->getCenters()) {
+            ofDrawEllipse(center, 10, 10);
+        }
         ofPopStyle();
         
         buildingController->drawLine();
         buildingController->drawPoints();
         ofPushStyle();
         ofSetColor(255, 0, 0);
-        ofDrawEllipse(buildingController->getCenter(), 10, 10);
+        for (auto center : buildingController->getCenters()) {
+            ofDrawEllipse(center, 10, 10);
+        }
         ofPopStyle();
+        
+        mountainController->drawLine();
+        mountainController->drawPoints();
+        ofPushStyle();
+        ofSetColor(255, 0, 0);
+        for (auto center : mountainController->getCenters()) {
+            ofDrawEllipse(center, 10, 10);
+        }
+        ofPopStyle();
+        
+        mountainController->drawArea();
     }
     
     buildingController->drawBuildings();
+    riverController->drawRiver();
+    mountainController->draw();
     masterObj.draw();
 }
 
@@ -57,8 +75,15 @@ void ofApp::keyPressed(int key){
         currentScapeType = ScapeType::RIVER;
     } else if (key == 'b') {
         currentScapeType = ScapeType::BUILDING;
+    }  else if (key == 'm') {
+        currentScapeType = ScapeType::MOUNTAIN;
+    } else if (key == ' ') {
+        currentScapeType = ScapeType::MASTER;
     } else if (key == 'd') {
         debugDraw = !debugDraw;
+    } else if (key == 's') {
+        cout << riverController->getLineCount() << endl;
+        cout << "test" << endl;
     }
 }
 
@@ -75,15 +100,23 @@ void ofApp::mouseMoved(int x, int y ){
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
     if (currentScapeType == ScapeType::RIVER) {
-        riverController->addPoint(x, y);
+        riverController->addPoint(riverController->getLineCount() - 1, x, y);
     } else if (currentScapeType == ScapeType::BUILDING) {
-        buildingController->addPoint(x, y);
+        buildingController->addPoint(buildingController->getLineCount() - 1, x, y);
+    } else if (currentScapeType == ScapeType::MOUNTAIN) {
+        mountainController->addPoint(mountainController->getLineCount() - 1, x, y);
     }
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    if (currentScapeType == ScapeType::RIVER) {
+        riverController->addPoint(riverController->getLineCount(), x, y);
+    } else if (currentScapeType == ScapeType::BUILDING) {
+        buildingController->addPoint(buildingController->getLineCount(), x, y);
+    } else if (currentScapeType == ScapeType::MOUNTAIN) {
+        mountainController->addPoint(mountainController->getLineCount(), x, y);
+    }
 }
 
 //--------------------------------------------------------------
@@ -119,22 +152,23 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 void ofApp::objectAdded(ofxTuioObject & tuioObject){
     //マーカー追加
     log = " new object: " + ofToString(tuioObject.getSymbolID())+
-    " X: "+ofToString(tuioObject.getX())+
-    " Y: "+ofToString(tuioObject.getY())+
-    " angle: "+ofToString(tuioObject.getAngleDegrees());
+    " X: " + ofToString(tuioObject.getX())+
+    " Y: " + ofToString(tuioObject.getY())+
+    " angle: " + ofToString(tuioObject.getAngleDegrees());
 }
+
 void ofApp::objectRemoved(ofxTuioObject & tuioObject){
     //マーカー削除
     log = " object removed: " + ofToString(tuioObject.getSymbolID())+
-    " X: "+ofToString(tuioObject.getX())+
-    " Y: "+ofToString(tuioObject.getY())+
-    " angle: "+ofToString(tuioObject.getAngleDegrees());
+    " X: " + ofToString(tuioObject.getX())+
+    " Y: " + ofToString(tuioObject.getY())+
+    " angle: " + ofToString(tuioObject.getAngleDegrees());
 }
+
 void ofApp::objectUpdated(ofxTuioObject & tuioObject){
     //マーカーの状態更新
     log = " object updated: " + ofToString(tuioObject.getSymbolID())+
-    " X: "+ofToString(tuioObject.getX())+
-    " Y: "+ofToString(tuioObject.getY())+
-    " angle: "+ofToString(tuioObject.getAngleDegrees());
+    " X: " + ofToString(tuioObject.getX())+
+    " Y: " + ofToString(tuioObject.getY())+
+    " angle: " + ofToString(tuioObject.getAngleDegrees());
 }
-
