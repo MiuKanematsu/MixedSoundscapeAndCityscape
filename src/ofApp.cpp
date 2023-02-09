@@ -3,21 +3,21 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFullscreen(true);
+    
+    //ポート番号3333で、TUIOの通信開始
+    tuio.setup(new ofxTuioUdpReceiver(3333));
     //TUIOに関連するイベントリスナーの追加
-    ofAddListener(tuio.AddTuioObject,this,&ofApp::objectAdded);
-    ofAddListener(tuio.RemoveTuioObject,this,&ofApp::objectRemoved);
-    ofAddListener(tuio.UpdateTuioObject,this,&ofApp::objectUpdated);
+    ofAddListener(tuio.AddTuioObject, this,&ofApp::objectAdded);
+    ofAddListener(tuio.RemoveTuioObject, this,&ofApp::objectRemoved);
+    ofAddListener(tuio.UpdateTuioObject, this,&ofApp::objectUpdated);
+    tuio.connect();
     
     //フレームレート設定
     ofSetFrameRate(60);
     //背景を黒に
-    ofBackground(0,0,0);
-     
-    //ポート番号3333で、TUIOの通信開始
-    tuio.connect();
-     
+    ofBackground(0, 0, 0);
+    
     //ログのテキストを空に
-    log = "";
     masterObj = MasterObject();
     masterObj.setPosition(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
 }
@@ -151,24 +151,39 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 void ofApp::objectAdded(ofxTuioObject & tuioObject){
     //マーカー追加
-    log = " new object: " + ofToString(tuioObject.getSymbolID())+
+    string log = " new object: " + ofToString(tuioObject.getSymbolID())+
     " X: " + ofToString(tuioObject.getX())+
     " Y: " + ofToString(tuioObject.getY())+
     " angle: " + ofToString(tuioObject.getAngleDegrees());
+    
+    if (tuioObject.getSymbolID() == 3) {
+        riverController->addPoint(riverController->getLineCount(),
+                                  tuioObject.getScreenX(ofGetWindowWidth()),
+                                  tuioObject.getScreenY(ofGetWindowHeight()));
+        cout << log << endl;
+    }
 }
 
 void ofApp::objectRemoved(ofxTuioObject & tuioObject){
     //マーカー削除
-    log = " object removed: " + ofToString(tuioObject.getSymbolID())+
+    string log = " object removed: " + ofToString(tuioObject.getSymbolID())+
     " X: " + ofToString(tuioObject.getX())+
     " Y: " + ofToString(tuioObject.getY())+
     " angle: " + ofToString(tuioObject.getAngleDegrees());
+//    cout << log << endl;
 }
 
 void ofApp::objectUpdated(ofxTuioObject & tuioObject){
     //マーカーの状態更新
-    log = " object updated: " + ofToString(tuioObject.getSymbolID())+
+    string log = " object updated: " + ofToString(tuioObject.getSymbolID())+
     " X: " + ofToString(tuioObject.getX())+
     " Y: " + ofToString(tuioObject.getY())+
     " angle: " + ofToString(tuioObject.getAngleDegrees());
+    
+    if (tuioObject.getSymbolID() == 3) {
+        riverController->addPoint(riverController->getLineCount() - 1,
+                                  tuioObject.getScreenX(ofGetWindowWidth()),
+                                  tuioObject.getScreenY(ofGetWindowHeight()));
+        cout << log << endl;
+    }
 }
