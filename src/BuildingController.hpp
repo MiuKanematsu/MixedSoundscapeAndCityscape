@@ -19,7 +19,7 @@ public:
     BuildingController(float _minDistance);
     void update(int _x, int _y);
     void update(ofVec2f _p);
-    void addPoint(int i, float _x, float _y);
+    bool addPoint(int i, float _x, float _y);
     
     // *** debug draw method ***
     void drawPoints();

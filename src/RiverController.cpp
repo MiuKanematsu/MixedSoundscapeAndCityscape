@@ -34,7 +34,7 @@ void RiverController::update() {
     }
 }
 
-void RiverController::addPoint(int riverIndex, float x, float y) {
+bool RiverController::addPoint(int riverIndex, float x, float y) {
     if (lines.size() == riverIndex) {
         lines.push_back(vector<ofVec2f>());
     }
@@ -46,7 +46,7 @@ void RiverController::addPoint(int riverIndex, float x, float y) {
         if(dist > minDistance) addRivers(riverIndex, 5);
     }
     
-    BaseController::addPoint(riverIndex, x, y);
+    return BaseController::addPoint(riverIndex, x, y);
 }
 
 void RiverController::addRivers(int riverIndex, int num) {

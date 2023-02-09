@@ -12,6 +12,8 @@ void ofApp::setup(){
     ofAddListener(tuio.UpdateTuioObject, this,&ofApp::objectUpdated);
     tuio.connect();
     
+    sender.setup("127.0.0.1", 12000);
+    
     //フレームレート設定
     ofSetFrameRate(60);
     //背景を黒に
@@ -99,12 +101,22 @@ void ofApp::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
+    bool added = false;
     if (currentScapeType == ScapeType::RIVER) {
-        riverController->addPoint(riverController->getLineCount() - 1, x, y);
+        added = riverController->addPoint(riverController->getLineCount() - 1, x, y);
     } else if (currentScapeType == ScapeType::BUILDING) {
-        buildingController->addPoint(buildingController->getLineCount() - 1, x, y);
+        added = buildingController->addPoint(buildingController->getLineCount() - 1, x, y);
     } else if (currentScapeType == ScapeType::MOUNTAIN) {
-        mountainController->addPoint(mountainController->getLineCount() - 1, x, y);
+        added = mountainController->addPoint(mountainController->getLineCount() - 1, x, y);
+    }
+    
+    if (added) {
+        ofxOscMessage message;
+        message.setAddress("/sounds/add");
+        message.addInt32Arg(currentScapeType);
+        message.addFloatArg(ofMap(x, 0, ofGetWindowWidth(), 0, 1.0));
+        message.addFloatArg(ofMap(y, 0, ofGetWindowHeight(), 0, 1.0));
+        sender.sendMessage(message);
     }
 }
 

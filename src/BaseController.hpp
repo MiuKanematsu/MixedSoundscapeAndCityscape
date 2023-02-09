@@ -18,7 +18,7 @@ public:
     void update();
     void drawLine();
     void drawPoints();
-    void addPoint(int i, float x, float y);
+    bool addPoint(int i, float x, float y);
     vector<ofVec2f> getCenters();
     bool intersect(ofVec2f _p1, ofVec2f _p2, float _w, float _h);
     int getLineCount() { return lines.size(); };

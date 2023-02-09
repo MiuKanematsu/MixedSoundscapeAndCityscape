@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxTuio.h"
+#include "ofxOsc.h"
 #include <BaseController.hpp>
 #include <RiverController.hpp>
 #include <BuildingController.hpp>
@@ -49,8 +50,9 @@ private:
     ofxTuioReceiver tuio;
     //ログの出力用
     string log;
-    ScapeType currentScapeType = ScapeType::RIVER;
+    ofxOscSender sender;
     
+    ScapeType currentScapeType = ScapeType::RIVER;
     RiverController *riverController = new RiverController(100);
     BuildingController *buildingController = new BuildingController(100);
     MountainController *mountainController = new MountainController(100);

@@ -55,7 +55,7 @@ vector<ofVec2f> BaseController::getCenters(){
     return centers;
 }
 
-void BaseController::addPoint(int i, float x, float y) {
+bool BaseController::addPoint(int i, float x, float y) {
     ofVec2f targetPoint = ofVec2f(x, y);
     
     if (i >= lines.size()) {
@@ -65,14 +65,17 @@ void BaseController::addPoint(int i, float x, float y) {
     vector<ofVec2f> &points = lines.at(i);
     if (points.size() == 0) {
         points.push_back(targetPoint);
-        return;
+        return true;
     }
     
     ofVec2f lastPonint = points.at(points.size() - 1);
     float distance = lastPonint.distance(targetPoint);
     if (distance > minDistance) {
         points.push_back(targetPoint);
+        return true;
     }
+    
+    return false;
 }
 
 bool BaseController::intersect(ofVec2f _p1, ofVec2f _p2, float _w, float _h) {
