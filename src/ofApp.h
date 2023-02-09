@@ -5,6 +5,7 @@
 #include <BaseController.hpp>
 #include <RiverController.hpp>
 #include <BuildingController.hpp>
+#include <MasterObject.hpp>
 
 enum ScapeType {
     RIVER = 1,
@@ -40,6 +41,7 @@ public:
     void objectUpdated(ofxTuioObject & tuioObject);
     
 private:
+    bool debugDraw = false;
     //TUIOのクライアントのインスタンス化
     ofxTuioReceiver tuio;
     //ログの出力用
@@ -48,4 +50,5 @@ private:
     
     RiverController *riverController = new RiverController(100);
     BuildingController *buildingController = new BuildingController(100);
+    MasterObject masterObj;
 };
