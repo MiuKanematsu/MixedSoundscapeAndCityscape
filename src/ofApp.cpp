@@ -193,11 +193,23 @@ void ofApp::objectUpdated(ofxTuioObject & tuioObject){
     " Y: " + ofToString(tuioObject.getY())+
     " angle: " + ofToString(tuioObject.getAngleDegrees());
     
+    bool added = false;
+    
     // TODO: ここにIDとの対応関係を追加
     if (tuioObject.getSymbolID() == 3) {
-        riverController->addPoint(riverController->getLineCount() - 1,
+        added = riverController->addPoint(riverController->getLineCount() - 1,
                                   tuioObject.getScreenX(ofGetWindowWidth()),
                                   tuioObject.getScreenY(ofGetWindowHeight()));
         cout << log << endl;
+    }
+    
+    // TODO: 画面比率と送信座標の調整
+    if (added) {
+        ofxOscMessage message;
+        message.setAddress("/sounds/add");
+        message.addInt32Arg(currentScapeType);
+        message.addFloatArg(ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 0, 1.0));
+        message.addFloatArg(ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 0, 1.0));
+        sender.sendMessage(message);
     }
 }
