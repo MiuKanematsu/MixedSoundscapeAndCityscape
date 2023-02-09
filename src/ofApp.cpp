@@ -16,30 +16,39 @@ void ofApp::setup(){
     tuio.connect();
      
     //ログのテキストを空に
-    log="";
+    log = "";
+    masterObj = MasterObject();
+    masterObj.setPosition(ofGetWindowWidth() / 2, ofGetWindowHeight() / 2);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     riverController->update();
-    buildingController->update();
+    buildingController->update(masterObj.getPosition());
+    masterObj.update(ofGetMouseX(), ofGetMouseY(), 100);
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    riverController->drawLine();
-    riverController->drawPoints();
-    ofPushStyle();
-    ofSetColor(255, 0, 0);
-    ofDrawEllipse(riverController->getCenter(), 10, 10);
-    ofPopStyle();
+    if (debugDraw) {
+        riverController->drawLine();
+        riverController->drawPoints();
+        
+        ofPushStyle();
+        ofSetColor(255, 0, 0);
+        ofDrawEllipse(riverController->getCenter(), 10, 10);
+        ofPopStyle();
+        
+        buildingController->drawLine();
+        buildingController->drawPoints();
+        ofPushStyle();
+        ofSetColor(255, 0, 0);
+        ofDrawEllipse(buildingController->getCenter(), 10, 10);
+        ofPopStyle();
+    }
     
-    buildingController->drawLine();
-    buildingController->drawPoints();
-    ofPushStyle();
-    ofSetColor(255, 0, 0);
-    ofDrawEllipse(buildingController->getCenter(), 10, 10);
-    ofPopStyle();
+    buildingController->drawBuildings();
+    masterObj.draw();
 }
 
 //--------------------------------------------------------------
@@ -48,6 +57,8 @@ void ofApp::keyPressed(int key){
         currentScapeType = ScapeType::RIVER;
     } else if (key == 'b') {
         currentScapeType = ScapeType::BUILDING;
+    } else if (key == 'd') {
+        debugDraw = !debugDraw;
     }
 }
 

@@ -67,3 +67,8 @@ void BaseController::deletePoints(int length) {
         this->deletePoint(0);
     }
 }
+
+bool BaseController::intersect(ofVec2f _p1, ofVec2f _p2, float _w, float _h) {
+    return (_p1.x - _w / 2 < _p2.x + _w / 2 && _p1.x + _w / 2 > _p2.x - _w / 2 &&
+            _p1.y - _h / 2 < _p2.y + _h / 2 && _p1.y + _h / 2 > _p2.y - _h / 2);
+}

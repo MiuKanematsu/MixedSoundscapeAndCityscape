@@ -22,13 +22,11 @@ public:
     ofVec2f getCenter();
     void deletePoint(int i);
     void deletePoints(int length);
-    
-private:
-    float minDistance;
-
+    bool intersect(ofVec2f _p1, ofVec2f _p2, float _w, float _h);
 protected:
     vector<ofVec2f> points;
     ofColor c;
+    float minDistance;
 };
 
 #endif /* BaseController_hpp */
