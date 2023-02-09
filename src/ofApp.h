@@ -5,12 +5,15 @@
 #include <BaseController.hpp>
 #include <RiverController.hpp>
 #include <BuildingController.hpp>
+#include <MountainController.hpp>
 #include <MasterObject.hpp>
 
 enum ScapeType {
+    NONE = -1,
     RIVER = 1,
     BUILDING = 2,
     MOUNTAIN = 3,
+    MASTER = 4,
 };
 
 class ofApp : public ofBaseApp{
@@ -50,5 +53,6 @@ private:
     
     RiverController *riverController = new RiverController(100);
     BuildingController *buildingController = new BuildingController(100);
+    MountainController *mountainController = new MountainController(100);
     MasterObject masterObj;
 };

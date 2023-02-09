@@ -12,14 +12,14 @@
 #include <BaseController.hpp>
 #include <Building.hpp>
 
-class BuildingController: public BaseController{
+class BuildingController: public BaseController {
 private:
     vector<Building> buildings;
 public:
     BuildingController(float _minDistance);
     void update(int _x, int _y);
     void update(ofVec2f _p);
-    void addPoint(float _x, float _y);
+    void addPoint(int i, float _x, float _y);
     
     // *** debug draw method ***
     void drawPoints();
