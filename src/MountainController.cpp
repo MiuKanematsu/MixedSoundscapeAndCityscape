@@ -24,6 +24,24 @@ ofVec2f calcCenter(vector<ofVec2f> vecs) {
     return center;
 }
 
+/**
+ * 周期的パーリンノイズ
+ * 参考文献: https://note.com/deconbatch/n/nc14219bfacc6
+ * @param {*} rad
+ * @param {*} t
+ * @returns
+ */
+float cyclicNoise(float rad, float t) {
+  float xInit = 1000;
+  float yInit = 1000;
+  float rBase = 100;
+  return ofNoise(
+    xInit + rBase * cos(rad) * 0.02 + t,
+    yInit + rBase * sin(rad) * 0.02 + t
+    );
+}
+
+
 MountainController::MountainController(float _minDistance): BaseController(_minDistance) {
     c = ofColor(0, 255, 0);
 }
@@ -55,6 +73,22 @@ void MountainController::draw() {
         ofVec2f center = calcCenter(line);
         for (auto point : line) {
             poly.addVertex(point.x - center.x, point.y - center.y);
+        }
+        
+        int divideCount = 5;
+        for (int j = 0; j < poly.size(); j++) {
+            ofVec2f v1 = poly.getVertices().at(j);
+            int nextIndex = j == poly.size() - 1 ? 0 : j + 1;
+            ofVec2f v2 = poly.getVertices().at(nextIndex);
+            ofVec2f lineVec = v2 - v1;
+            for (int k = 1; k < divideCount; k++) {
+                ofVec2f dividedVec = lineVec / divideCount * k;
+                ofVec2f insertedVec = v1 + dividedVec;
+                ofVec2f normalizedVec = insertedVec.getNormalized();
+                insertedVec += normalizedVec * (cyclicNoise(atan2(normalizedVec.x, normalizedVec.y), 1) * 15);
+                poly.insertVertex(insertedVec.x, insertedVec.y, 0, j + 1);
+                j++;
+            }
         }
         
         float maxArea = ofGetWindowWidth() * ofGetWindowHeight() / 10;
