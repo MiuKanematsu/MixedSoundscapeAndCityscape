@@ -20,11 +20,19 @@ void oscEvent(OscMessage recievedMessage) {
   print(" addrpattern: " + recievedMessage.addrPattern());
   println(" typetag: " + recievedMessage.typetag());
 
-  if ("/sounds/add".equals(recievedMessage.addrPattern())) {
+
+  String pattern = recievedMessage.addrPattern();
+  
+  if ("/sounds/add".equals(pattern)) {
     OscMessage message = new OscMessage(recievedMessage.addrPattern());
     message.add(recievedMessage.get(0).intValue());
     message.add(recievedMessage.get(1).floatValue());
     message.add(recievedMessage.get(2).floatValue());
+    oscP5.send(message, audioAddress);
+  } else if ("/listener/move".equals(pattern)) {
+    OscMessage message = new OscMessage(recievedMessage.addrPattern());
+    message.add(recievedMessage.get(0).floatValue());
+    message.add(recievedMessage.get(1).floatValue());
     oscP5.send(message, audioAddress);
   }
 }

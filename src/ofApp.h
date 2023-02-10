@@ -35,6 +35,8 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+    void sendMoveListenerMessage(float x, float y);
+    void sendAddSoundMessage(int symbolId, float x, float y);
     
     //TUIOの物体(マーカー)に関係するイベントを追加
     //物体の追加を検知

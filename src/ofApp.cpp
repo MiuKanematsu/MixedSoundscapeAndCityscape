@@ -28,7 +28,7 @@ void ofApp::setup(){
 void ofApp::update(){
     riverController->update();
     buildingController->update(masterObj.getPosition());
-    masterObj.update(ofGetMouseX(), ofGetMouseY(), 100);
+//    masterObj.update(ofGetMouseX(), ofGetMouseY(), 100);
 }
 
 //--------------------------------------------------------------
@@ -83,9 +83,6 @@ void ofApp::keyPressed(int key){
         currentScapeType = ScapeType::MASTER;
     } else if (key == 'd') {
         debugDraw = !debugDraw;
-    } else if (key == 's') {
-        cout << riverController->getLineCount() << endl;
-        cout << "test" << endl;
     }
 }
 
@@ -108,15 +105,16 @@ void ofApp::mouseDragged(int x, int y, int button){
         added = buildingController->addPoint(buildingController->getLineCount() - 1, x, y);
     } else if (currentScapeType == ScapeType::MOUNTAIN) {
         added = mountainController->addPoint(mountainController->getLineCount() - 1, x, y);
+    } else if (currentScapeType == MASTER) {
+        masterObj.update(x, y, 100);
+        sendMoveListenerMessage(ofMap(x, 0, ofGetWindowWidth(), 0, 1.0),
+                                ofMap(y, 0, ofGetWindowHeight(), 0, 1.0));
     }
     
     if (added) {
-        ofxOscMessage message;
-        message.setAddress("/sounds/add");
-        message.addInt32Arg(currentScapeType);
-        message.addFloatArg(ofMap(x, 0, ofGetWindowWidth(), 0, 1.0));
-        message.addFloatArg(ofMap(y, 0, ofGetWindowHeight(), 0, 1.0));
-        sender.sendMessage(message);
+        sendAddSoundMessage(currentScapeType,
+                            ofMap(x, 0, ofGetWindowWidth(), 0, 1.0),
+                            ofMap(y, 0, ofGetWindowHeight(), 0, 1.0));
     }
 }
 
@@ -194,22 +192,48 @@ void ofApp::objectUpdated(ofxTuioObject & tuioObject){
     " angle: " + ofToString(tuioObject.getAngleDegrees());
     
     bool added = false;
+    int symbolId = tuioObject.getSymbolID();
     
-    // TODO: ここにIDとの対応関係を追加
-    if (tuioObject.getSymbolID() == 3) {
+    if (symbolId == 0) {
+         masterObj.update(tuioObject.getScreenX(ofGetWindowWidth()),
+                          tuioObject.getScreenY(ofGetWindowHeight()),
+                          100);
+        sendMoveListenerMessage(ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 0, 1.0),
+                                ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 0, 1.0));
+    } else if (symbolId == 1) {
+        added = buildingController->addPoint(riverController->getLineCount() - 1,
+                                          tuioObject.getScreenX(ofGetWindowWidth()),
+                                          tuioObject.getScreenY(ofGetWindowHeight()));
+    } else if (symbolId == 2) {
+        added = mountainController->addPoint(riverController->getLineCount() - 1,
+                                          tuioObject.getScreenX(ofGetWindowWidth()),
+                                          tuioObject.getScreenY(ofGetWindowHeight()));
+    } else if (symbolId == 3) {
         added = riverController->addPoint(riverController->getLineCount() - 1,
-                                  tuioObject.getScreenX(ofGetWindowWidth()),
-                                  tuioObject.getScreenY(ofGetWindowHeight()));
-        cout << log << endl;
+                                          tuioObject.getScreenX(ofGetWindowWidth()),
+                                          tuioObject.getScreenY(ofGetWindowHeight()));
     }
     
-    // TODO: 画面比率と送信座標の調整
     if (added) {
-        ofxOscMessage message;
-        message.setAddress("/sounds/add");
-        message.addInt32Arg(currentScapeType);
-        message.addFloatArg(ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 0, 1.0));
-        message.addFloatArg(ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 0, 1.0));
-        sender.sendMessage(message);
+        sendAddSoundMessage(symbolId,
+                            ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 0, 1.0),
+                            ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 0, 1.0));
     }
+}
+
+void ofApp::sendMoveListenerMessage(float x, float y) {
+    ofxOscMessage message;
+    message.setAddress("/listener/move");
+    message.addFloatArg(x);
+    message.addFloatArg(y);
+    sender.sendMessage(message);
+}
+
+void ofApp::sendAddSoundMessage(int symbolId, float x, float y) {
+    ofxOscMessage message;
+    message.setAddress("/sounds/add");
+    message.addInt32Arg(symbolId);
+    message.addFloatArg(x);
+    message.addFloatArg(y);
+    sender.sendMessage(message);
 }
