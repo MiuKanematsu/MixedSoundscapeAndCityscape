@@ -43,9 +43,10 @@ void MountainController::drawArea() {
 }
 
 void MountainController::draw() {
+    int maxAreaLevel = 5;
     ofPushStyle();
     ofFill();
-    ofSetColor(255, 255 / 2);
+    ofSetColor(255, 255 / maxAreaLevel);
     for (int i = 0; i < lines.size(); i++) {
         auto line = lines.at(i);
         // MEMO: https://github.com/openframeworks/openFrameworks/issues/901
@@ -58,14 +59,13 @@ void MountainController::draw() {
         
         float maxArea = ofGetWindowWidth() * ofGetWindowHeight() / 10;
         float area = poly.getArea() > maxArea ? maxArea : poly.getArea();
-        int areaLevel = int(ofMap(area, 0, maxArea, 1, 5));
-        
+        int areaLevel = int(ofMap(area, 0, maxArea, 1, maxAreaLevel));
         ofPushMatrix();
         ofTranslate(center);
         for (int j = 1; j <= areaLevel; j++) {
             ofPushMatrix();
             ofBeginShape();
-            float s = j / 2.0;
+            float s = j / float(areaLevel);
             ofScale(s);
             for (auto ver : poly.getVertices()) {
                 ofVertex(ver.x, ver.y);

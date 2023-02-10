@@ -22,6 +22,7 @@ public:
     vector<ofVec2f> getCenters();
     bool intersect(ofVec2f _p1, ofVec2f _p2, float _w, float _h);
     int getLineCount() { return lines.size(); };
+    void clear() { lines.clear(); };
 protected:
     vector<vector<ofVec2f>> lines;
     ofColor c;

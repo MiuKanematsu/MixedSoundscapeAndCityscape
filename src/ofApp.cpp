@@ -83,6 +83,11 @@ void ofApp::keyPressed(int key){
         currentScapeType = ScapeType::MASTER;
     } else if (key == 'd') {
         debugDraw = !debugDraw;
+    } else if (key == 'c') {
+        clearSounds();
+        riverController->clear();
+        buildingController->clear();
+        mountainController->clear();
     }
 }
 
@@ -235,5 +240,11 @@ void ofApp::sendAddSoundMessage(int symbolId, float x, float y) {
     message.addInt32Arg(symbolId);
     message.addFloatArg(x);
     message.addFloatArg(y);
+    sender.sendMessage(message);
+}
+
+void ofApp::clearSounds() {
+    ofxOscMessage message;
+    message.setAddress("/sounds/clear");
     sender.sendMessage(message);
 }

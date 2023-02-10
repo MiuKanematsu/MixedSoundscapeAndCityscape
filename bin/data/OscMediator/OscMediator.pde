@@ -34,5 +34,8 @@ void oscEvent(OscMessage recievedMessage) {
     message.add(recievedMessage.get(0).floatValue());
     message.add(recievedMessage.get(1).floatValue());
     oscP5.send(message, audioAddress);
+  } else if ("/sounds/clear".equals(pattern)) {
+    OscMessage message = new OscMessage(recievedMessage.addrPattern());
+    oscP5.send(message, audioAddress);
   }
 }

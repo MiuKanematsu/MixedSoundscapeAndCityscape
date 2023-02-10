@@ -20,6 +20,10 @@ public:
     void update(int _x, int _y);
     void update(ofVec2f _p);
     bool addPoint(int i, float _x, float _y);
+    void clear() {
+        buildings.clear();
+        BaseController::clear();
+    };
     
     // *** debug draw method ***
     void drawPoints();

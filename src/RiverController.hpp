@@ -20,6 +20,10 @@ public:
     bool addPoint(int riverIndex, float x, float y);
     void update();
     void drawRiver();
+    void clear() {
+        riverParticles.clear();
+        BaseController::clear();
+    };
 private:
     vector<vector<RiverParticle>> riverParticles;
 };
