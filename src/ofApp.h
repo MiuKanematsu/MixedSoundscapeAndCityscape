@@ -9,6 +9,9 @@
 #include <MountainController.hpp>
 #include <MasterObject.hpp>
 
+const string ADDRESS = "192.168.0.107";
+const int PORT = 12000;
+
 enum ScapeType {
     NONE = -1,
     RIVER = 1,

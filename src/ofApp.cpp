@@ -12,7 +12,7 @@ void ofApp::setup(){
     ofAddListener(tuio.UpdateTuioObject, this,&ofApp::objectUpdated);
     tuio.connect();
     
-    sender.setup("127.0.0.1", 12000);
+    sender.setup(ADDRESS, PORT);
     
     //フレームレート設定
     ofSetFrameRate(60);
@@ -160,7 +160,7 @@ void ofApp::gotMessage(ofMessage msg){
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
+void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
@@ -171,12 +171,27 @@ void ofApp::objectAdded(ofxTuioObject & tuioObject){
     " Y: " + ofToString(tuioObject.getY())+
     " angle: " + ofToString(tuioObject.getAngleDegrees());
     
+    int symbolId = tuioObject.getSymbolID();
+    bool added = false;
     // TODO: ここにIDとの対応関係を追加
-    if (tuioObject.getSymbolID() == 3) {
-        riverController->addPoint(riverController->getLineCount(),
-                                  tuioObject.getScreenX(ofGetWindowWidth()),
-                                  tuioObject.getScreenY(ofGetWindowHeight()));
-        cout << log << endl;
+    if (symbolId == 1) {
+        added = buildingController->addPoint(buildingController->getLineCount(),
+                                             1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
+                                             tuioObject.getScreenY(ofGetWindowHeight()));
+    } else if (symbolId == 2) {
+        added = riverController->addPoint(riverController->getLineCount(),
+                                          1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
+                                          tuioObject.getScreenY(ofGetWindowHeight()));
+    } else if (symbolId == 3) {
+        added = mountainController->addPoint(mountainController->getLineCount(),
+                                             1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
+                                             tuioObject.getScreenY(ofGetWindowHeight()));
+    }
+    
+    if (added) {
+        sendAddSoundMessage(symbolId,
+                            ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 1.0, 0.0),
+                            ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 1.0, 0.0));
     }
 }
 
@@ -207,15 +222,15 @@ void ofApp::objectUpdated(ofxTuioObject & tuioObject){
                                 ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 0, 1.0));
     } else if (symbolId == 1) {
         added = buildingController->addPoint(buildingController->getLineCount() - 1,
-                                          tuioObject.getScreenX(ofGetWindowWidth()),
-                                          tuioObject.getScreenY(ofGetWindowHeight()));
-    } else if (symbolId == 2) {
-        added = mountainController->addPoint(mountainController->getLineCount() - 1,
-                                          tuioObject.getScreenX(ofGetWindowWidth()),
-                                          tuioObject.getScreenY(ofGetWindowHeight()));
+                                             1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
+                                             tuioObject.getScreenY(ofGetWindowHeight()));
     } else if (symbolId == 3) {
+        added = mountainController->addPoint(mountainController->getLineCount() - 1,
+                                             1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
+                                             tuioObject.getScreenY(ofGetWindowHeight()));
+    } else if (symbolId == 2) {
         added = riverController->addPoint(riverController->getLineCount() - 1,
-                                          tuioObject.getScreenX(ofGetWindowWidth()),
+                                          1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
                                           tuioObject.getScreenY(ofGetWindowHeight()));
     }
     
