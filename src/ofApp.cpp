@@ -173,7 +173,6 @@ void ofApp::objectAdded(ofxTuioObject & tuioObject){
     
     int symbolId = tuioObject.getSymbolID();
     bool added = false;
-    // TODO: ここにIDとの対応関係を追加
     if (symbolId == 1) {
         added = buildingController->addPoint(buildingController->getLineCount(),
                                              1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
@@ -193,15 +192,6 @@ void ofApp::objectAdded(ofxTuioObject & tuioObject){
                             ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 1.0, 0.0),
                             ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 1.0, 0.0));
     }
-}
-
-void ofApp::objectRemoved(ofxTuioObject & tuioObject){
-    //マーカー削除
-    string log = " object removed: " + ofToString(tuioObject.getSymbolID())+
-    " X: " + ofToString(tuioObject.getX())+
-    " Y: " + ofToString(tuioObject.getY())+
-    " angle: " + ofToString(tuioObject.getAngleDegrees());
-//    cout << log << endl;
 }
 
 void ofApp::objectUpdated(ofxTuioObject & tuioObject){
@@ -224,14 +214,14 @@ void ofApp::objectUpdated(ofxTuioObject & tuioObject){
         added = buildingController->addPoint(buildingController->getLineCount() - 1,
                                              1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
                                              tuioObject.getScreenY(ofGetWindowHeight()));
-    } else if (symbolId == 3) {
-        added = mountainController->addPoint(mountainController->getLineCount() - 1,
-                                             1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
-                                             tuioObject.getScreenY(ofGetWindowHeight()));
     } else if (symbolId == 2) {
         added = riverController->addPoint(riverController->getLineCount() - 1,
                                           1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
                                           tuioObject.getScreenY(ofGetWindowHeight()));
+    } else if (symbolId == 3) {
+        added = mountainController->addPoint(mountainController->getLineCount() - 1,
+                                             1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
+                                             tuioObject.getScreenY(ofGetWindowHeight()));
     }
     
     if (added) {
@@ -239,6 +229,15 @@ void ofApp::objectUpdated(ofxTuioObject & tuioObject){
                             ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 0, 1.0),
                             ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 0, 1.0));
     }
+}
+
+void ofApp::objectRemoved(ofxTuioObject & tuioObject){
+    //マーカー削除
+    string log = " object removed: " + ofToString(tuioObject.getSymbolID())+
+    " X: " + ofToString(tuioObject.getX())+
+    " Y: " + ofToString(tuioObject.getY())+
+    " angle: " + ofToString(tuioObject.getAngleDegrees());
+//    cout << log << endl;
 }
 
 void ofApp::sendMoveListenerMessage(float x, float y) {
