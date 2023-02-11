@@ -206,11 +206,11 @@ void ofApp::objectUpdated(ofxTuioObject & tuioObject){
         sendMoveListenerMessage(ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 0, 1.0),
                                 ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 0, 1.0));
     } else if (symbolId == 1) {
-        added = buildingController->addPoint(riverController->getLineCount() - 1,
+        added = buildingController->addPoint(buildingController->getLineCount() - 1,
                                           tuioObject.getScreenX(ofGetWindowWidth()),
                                           tuioObject.getScreenY(ofGetWindowHeight()));
     } else if (symbolId == 2) {
-        added = mountainController->addPoint(riverController->getLineCount() - 1,
+        added = mountainController->addPoint(mountainController->getLineCount() - 1,
                                           tuioObject.getScreenX(ofGetWindowWidth()),
                                           tuioObject.getScreenY(ofGetWindowHeight()));
     } else if (symbolId == 3) {
