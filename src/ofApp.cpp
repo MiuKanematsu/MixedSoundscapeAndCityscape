@@ -63,12 +63,12 @@ void ofApp::draw(){
         ofPopStyle();
         
         mountainController->drawArea();
+        masterObj.draw();
     }
     
     buildingController->drawBuildings();
     riverController->drawRiver();
     mountainController->draw();
-    masterObj.draw();
 }
 
 //--------------------------------------------------------------
