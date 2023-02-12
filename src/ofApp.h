@@ -40,7 +40,7 @@ public:
     void gotMessage(ofMessage msg);
     void sendMoveListenerMessage(float x, float y);
     void sendAddSoundMessage(int symbolId, float x, float y);
-    void clearSounds();
+    void sendClearSoundsMessage();
     
     //TUIOの物体(マーカー)に関係するイベントを追加
     //物体の追加を検知

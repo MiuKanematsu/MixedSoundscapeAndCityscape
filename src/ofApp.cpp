@@ -28,7 +28,7 @@ void ofApp::setup(){
 void ofApp::update(){
     riverController->update();
     buildingController->update(masterObj.getPosition());
-//    masterObj.update(ofGetMouseX(), ofGetMouseY(), 100);
+    //    masterObj.update(ofGetMouseX(), ofGetMouseY(), 100);
 }
 
 //--------------------------------------------------------------
@@ -84,7 +84,7 @@ void ofApp::keyPressed(int key){
     } else if (key == 'd') {
         debugDraw = !debugDraw;
     } else if (key == 'c') {
-        clearSounds();
+        sendClearSoundsMessage();
         riverController->clear();
         buildingController->clear();
         mountainController->clear();
@@ -93,12 +93,12 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+    
 }
 
 //--------------------------------------------------------------
@@ -111,7 +111,7 @@ void ofApp::mouseDragged(int x, int y, int button){
     } else if (currentScapeType == ScapeType::MOUNTAIN) {
         added = mountainController->addPoint(mountainController->getLineCount() - 1, x, y);
     } else if (currentScapeType == MASTER) {
-        masterObj.update(x, y, 100);
+        masterObj.update(x, y);
         sendMoveListenerMessage(ofMap(x, 0, ofGetWindowWidth(), 0, 1.0),
                                 ofMap(y, 0, ofGetWindowHeight(), 0, 1.0));
     }
@@ -136,108 +136,109 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){
-
+    
 }
 
 void ofApp::objectAdded(ofxTuioObject & tuioObject){
     //マーカー追加
-    string log = " new object: " + ofToString(tuioObject.getSymbolID())+
+    string log =
+    " new object: " + ofToString(tuioObject.getSymbolID())+
     " X: " + ofToString(tuioObject.getX())+
     " Y: " + ofToString(tuioObject.getY())+
     " angle: " + ofToString(tuioObject.getAngleDegrees());
     
     int symbolId = tuioObject.getSymbolID();
+    float x = ofMap(tuioObject.getX(),
+                    0, 1.0,
+                    0, ofGetWidth());
+    float y = ofMap(tuioObject.getY(),
+                    0, 1.0,
+                    ofGetHeight(), 0);
     bool added = false;
     if (symbolId == 1) {
-        added = buildingController->addPoint(buildingController->getLineCount(),
-                                             1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
-                                             tuioObject.getScreenY(ofGetWindowHeight()));
+        added = buildingController->addPoint(buildingController->getLineCount(), x, y);
     } else if (symbolId == 2) {
-        added = riverController->addPoint(riverController->getLineCount(),
-                                          1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
-                                          tuioObject.getScreenY(ofGetWindowHeight()));
+        added = riverController->addPoint(riverController->getLineCount(), x, y);
     } else if (symbolId == 3) {
-        added = mountainController->addPoint(mountainController->getLineCount(),
-                                             1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
-                                             tuioObject.getScreenY(ofGetWindowHeight()));
+        added = mountainController->addPoint(mountainController->getLineCount(), x, y);
     }
     
-    if (added) {
-        sendAddSoundMessage(symbolId,
-                            ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 1.0, 0.0),
-                            ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 1.0, 0.0));
-    }
+//    if (added) {
+//        sendAddSoundMessage(symbolId,
+//                            ofMap(x, 0, ofGetWindowWidth(), 1.0, 0.0),
+//                            ofMap(y, 0, ofGetWindowHeight(), 1.0, 0.0));
+//    }
 }
 
 void ofApp::objectUpdated(ofxTuioObject & tuioObject){
     //マーカーの状態更新
-    string log = " object updated: " + ofToString(tuioObject.getSymbolID())+
+    string log =
+    " object updated: " + ofToString(tuioObject.getSymbolID())+
     " X: " + ofToString(tuioObject.getX())+
     " Y: " + ofToString(tuioObject.getY())+
     " angle: " + ofToString(tuioObject.getAngleDegrees());
     
     bool added = false;
     int symbolId = tuioObject.getSymbolID();
+    float x = ofMap(tuioObject.getX(),
+                    0, 1.0,
+                    0, ofGetWidth());
+    float y = ofMap(tuioObject.getY(),
+                    0, 1.0,
+                    ofGetHeight(), 0);
     
     if (symbolId == 0) {
-         masterObj.update(tuioObject.getScreenX(ofGetWindowWidth()),
-                          tuioObject.getScreenY(ofGetWindowHeight()),
-                          100);
-        sendMoveListenerMessage(ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 0, 1.0),
-                                ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 0, 1.0));
+        masterObj.update(x, y);
+        sendMoveListenerMessage(ofMap(x, 0, ofGetWindowWidth(), 1.0, 0.0),
+                                ofMap(y, 0, ofGetWindowHeight(), 1.0, 0.0));
     } else if (symbolId == 1) {
-        added = buildingController->addPoint(buildingController->getLineCount() - 1,
-                                             1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
-                                             tuioObject.getScreenY(ofGetWindowHeight()));
+        added = buildingController->addPoint(buildingController->getLineCount() - 1, x, y);
     } else if (symbolId == 2) {
-        added = riverController->addPoint(riverController->getLineCount() - 1,
-                                          1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
-                                          tuioObject.getScreenY(ofGetWindowHeight()));
+        added = riverController->addPoint(riverController->getLineCount() - 1, x, y);
     } else if (symbolId == 3) {
-        added = mountainController->addPoint(mountainController->getLineCount() - 1,
-                                             1.0 - tuioObject.getScreenX(ofGetWindowWidth()),
-                                             tuioObject.getScreenY(ofGetWindowHeight()));
+        added = mountainController->addPoint(mountainController->getLineCount() - 1, x, y);
     }
     
     if (added) {
         sendAddSoundMessage(symbolId,
-                            ofMap(tuioObject.getScreenX(ofGetWindowWidth()), 0, ofGetWindowWidth(), 0, 1.0),
-                            ofMap(tuioObject.getScreenY(ofGetWindowHeight()), 0, ofGetWindowHeight(), 0, 1.0));
+                            ofMap(x, 0, ofGetWindowWidth(), 1.0, 0.0),
+                            ofMap(y, 0, ofGetWindowHeight(), 1.0, 0.0));
     }
 }
 
-void ofApp::objectRemoved(ofxTuioObject & tuioObject){
+void ofApp::objectRemoved(ofxTuioObject & tuioObject) {
     //マーカー削除
-    string log = " object removed: " + ofToString(tuioObject.getSymbolID())+
+    string log =
+    " object removed: " + ofToString(tuioObject.getSymbolID()) +
     " X: " + ofToString(tuioObject.getX())+
     " Y: " + ofToString(tuioObject.getY())+
     " angle: " + ofToString(tuioObject.getAngleDegrees());
-//    cout << log << endl;
+    //    cout << log << endl;
 }
 
 void ofApp::sendMoveListenerMessage(float x, float y) {
@@ -257,7 +258,7 @@ void ofApp::sendAddSoundMessage(int symbolId, float x, float y) {
     sender.sendMessage(message);
 }
 
-void ofApp::clearSounds() {
+void ofApp::sendClearSoundsMessage() {
     ofxOscMessage message;
     message.setAddress("/sounds/clear");
     sender.sendMessage(message);

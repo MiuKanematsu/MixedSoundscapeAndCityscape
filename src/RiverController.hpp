@@ -17,7 +17,7 @@ public:
     RiverController(float _minDistance);
     void addRivers(int riverIndex, int num);
     void drawPoints();
-    bool addPoint(int riverIndex, float x, float y);
+    bool addPoint(int lineIndex, float x, float y);
     void update();
     void drawRiver();
     void clear() {

@@ -21,7 +21,7 @@ public:
     void draw();
     void move();
     bool isInside(float _x, float _y, float _distance);
-    void update(float _x, float _y, float _distance);
+    void update(float _x, float _y);
     ofVec2f getPosition();
 };
 

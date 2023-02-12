@@ -42,16 +42,9 @@ bool MasterObject::isInside(float _x, float _y, float _distance) {
     return ofDist(x, y, _x, _y) < _distance;
 }
 
-void MasterObject::update(float _x, float _y, float _distance) {
-    if (isInside(_x, _y, _distance) && ofGetMousePressed()) {
-        x = _x;
-        y = _y;
-        radiusX = x;
-        radiusY = y;
-        angle = atan2(y - ofGetWindowHeight() / 2, x - ofGetWindowWidth() / 2);
-    } else {
-        move();
-    }
+void MasterObject::update(float _x, float _y) {
+    x = _x;
+    y = _y;
 }
 
 ofVec2f MasterObject::getPosition() {

@@ -34,26 +34,25 @@ void RiverController::update() {
     }
 }
 
-bool RiverController::addPoint(int riverIndex, float x, float y) {
-    if (lines.size() == riverIndex) {
+bool RiverController::addPoint(int lineIndex, float x, float y) {
+    if (lines.size() == lineIndex) {
         lines.push_back(vector<ofVec2f>());
-    }
-    
-    auto points = lines.at(riverIndex);
-    if (points.size() > 0) {
-        ofVec2f lastPoint = points.at(points.size() - 1);
-        float dist = ofDist(x, y, lastPoint.x, lastPoint.y);
-        if(dist > minDistance) addRivers(riverIndex, 5);
-    }
-    
-    return BaseController::addPoint(riverIndex, x, y);
-}
-
-void RiverController::addRivers(int riverIndex, int num) {
-    if (riverParticles.size() == riverIndex) {
         riverParticles.push_back(vector<RiverParticle>());
     }
     
+    auto points = lines.at(lineIndex);
+    if (points.size() > 0) {
+        ofVec2f lastPoint = points.at(points.size() - 1);
+        float dist = ofDist(x, y, lastPoint.x, lastPoint.y);
+        if(dist > minDistance) addRivers(lineIndex, 5);
+    } else {
+        addRivers(lineIndex, 0);
+    }
+    
+    return BaseController::addPoint(lineIndex, x, y);
+}
+
+void RiverController::addRivers(int riverIndex, int num) {
     auto &river = riverParticles.at(riverIndex);
     auto points = lines.at(riverIndex);
     for (int i = 0; i < num; i++) {
